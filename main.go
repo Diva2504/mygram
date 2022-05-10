@@ -1,11 +1,6 @@
 package main
 
-import (
-	"fmt"
 
-	"github.com/gin-gonic/gin"
-)
-
-func main()  *gin.Engine{
+func main() {
   
 }
