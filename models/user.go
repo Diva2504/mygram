@@ -1,7 +1,9 @@
 package models
 
+import "gorm.io/gorm"
+
 type User struct {
-	ID       uint
+	gorm.Model
 	Username string
 	Email    string
 	Password string
@@ -9,8 +11,8 @@ type User struct {
 }
 
 type SocialMedia struct {
-	ID             uint
-	name           string
-	SocialMediaUrl string
-	UserId         int
+	gorm.Model
+	Name           string `gorm:"type:varchar(255)" json:"name" binding:"required"`
+	SocialMediaUrl string `gorm:"type:text" json:"socmed_url" binding:"required"`
+	UserID         uint   `gorm:"not null" json:"user_id"`
 }
