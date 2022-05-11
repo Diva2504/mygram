@@ -2,12 +2,14 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/takadev15/mygram-api/controllers"
+	"github.com/takadev15/mygram-api/databases"
 )
 
 func CommentRoutes() *gin.Engine {
 	r := gin.Default()
-	//db := database.GetDB()
-	//commentController := &controllers.CommentController{Connect: db}
+	db := databases.GetDB()
+	commentController := &controllers.Handlers{Connect: db}
 
 	commentRoutes := r.Group("/comments")
 	{

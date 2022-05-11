@@ -20,8 +20,8 @@ func GetAllComments(db *gorm.DB) ([]models.Comment, error) {
 	}
 }
 
-func CreateComment(db *gorm.DB, input *models.Comment) error {
-	result := db.Create(&input)
+func CreateComment(input *models.Comment, db *gorm.DB) error {
+	result := db.Debug().Create(&input)
 
 	if result.Error != nil {
 		return result.Error
@@ -29,12 +29,16 @@ func CreateComment(db *gorm.DB, input *models.Comment) error {
 	return nil
 }
 
-//func UpdateComment(db *gorm.DB, id uint, data *models.Comment) (models.Comment, error) {
-//var comment models.Comment
+func UpdateComment(id int, data *models.Comment, db *gorm.DB) (models.Comment, error) {
+	var comment models.Comment
+	err := db.Model(&comment).Where("id = ?", id).Updates(&data).Error
+	if err != nil {
+		return models.Comment{}, err
+	}
+	return comment, err
+}
 
-//}
-
-func DeleteComment(id uint, db *gorm.DB) error {
+func DeleteComment(id int, db *gorm.DB) error {
 	var comment models.Comment
 
 	del := db.Delete(&comment, id)
