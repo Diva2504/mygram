@@ -25,22 +25,25 @@ type ResponseSocmed struct {
 	User           ResponseUser `json:"user"`
 }
 
+type InputSocmed struct {
+	Name           string `json:"name"`
+	SocialMediaUrl string `json:"social_media_url"`
+}
+
 func (db Handlers) GetAllSocmed(c *gin.Context) {
 	var socmedRes []ResponseSocmed
-	_, err := repository.GetAllSocmed(db.Connect)
+	res, err := repository.GetAllSocmed(db.Connect)
 
-	// for  := range res {
-	// 	// socmedRes[i].ID = int(res[i].ID)
-	// 	// socmedRes[i].Name = res[i].
-	// 	// socmedRes[i].Photo_id = string(res[i].PhotoID)
-	// 	// commentRes[i].Updated_at = res[i]
-	// 	// commentRes[i].Created_at = res[i].Created_at
-	// 	// commentRes[i].Photos.ID = res[i].Photo.ID
-	// 	// commentRes[i].Photos.Title = res[i].Photo.Title
-	// 	// commentRes[i].Photos.Caption = res[i].Photo.Caption
-	// 	// commentRes[i].Photos.PhotoUrl = res[i].Photo.PhotoUrl
-	// 	//commentRes[i].Photos.UserID = res[i].Photo.User
-	// }
+	for i := range res {
+		socmedRes[i].ID = int(res[i].ID)
+		socmedRes[i].Name = res[i].Name
+		socmedRes[i].SocialMediaUrl = res[i].SocialMediaUrl
+		socmedRes[i].UserID = int(res[i].UserID)
+		socmedRes[i].Created_at = res[i].CreatedAt
+		socmedRes[i].User.ID = int(res[i].User.ID)
+		socmedRes[i].User.Username = res[i].User.Username
+		socmedRes[i].User.Email = res[i].User.Email
+	}
 	var result gin.H
 
 	if err != nil {
@@ -56,8 +59,9 @@ func (db Handlers) GetAllSocmed(c *gin.Context) {
 
 func (db Handlers) CreateSocmed(c *gin.Context) {
 	var (
-		socmed models.SocialMedia
-		result gin.H
+		socmed    models.SocialMedia
+		result    gin.H
+		inpSocmed InputSocmed
 	)
 	if err := c.ShouldBindJSON(&socmed); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
@@ -68,8 +72,18 @@ func (db Handlers) CreateSocmed(c *gin.Context) {
 			"message": err,
 		}
 	}
+	counter++
+	{
+		socmed.ID = counter
+		socmed.Name = inpSocmed.Name
+		socmed.SocialMediaUrl = inpSocmed.SocialMediaUrl
+	}
 	result = gin.H{
-		"result": socmed,
+		"id":               socmed.ID,
+		"name":             socmed.Name,
+		"social_media_url": socmed.SocialMediaUrl,
+		"user_id":          socmed.SocialMediaUrl,
+		"created_at":       socmed.CreatedAt,
 	}
 	c.JSON(http.StatusOK, result)
 }
@@ -106,7 +120,11 @@ func (db Handlers) UpdateSocmed(c *gin.Context) {
 		}
 	}
 	result = gin.H{
-		"result": socmed,
+		"id":               socmed.ID,
+		"name":             socmed.Name,
+		"social_media_url": socmed.SocialMediaUrl,
+		"user_id":          socmed.SocialMediaUrl,
+		"updated_at":       socmed.UpdatedAt,
 	}
 	c.JSON(http.StatusOK, result)
 }

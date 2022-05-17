@@ -3,9 +3,10 @@ package models
 import "gorm.io/gorm"
 
 type Photo struct {
-  gorm.Model
+	gorm.Model
 	Title    string
 	Caption  string
 	PhotoUrl string
+	UserID   int
 	User     *User
 }
