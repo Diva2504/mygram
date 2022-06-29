@@ -5,9 +5,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetAllComments(db *gorm.DB) ([]models.Comment, error) {
+func GetAllComments(db *gorm.DB, userID uint) ([]models.Comment, error) {
 	var comments []models.Comment
-	result := db.Find(&comments)
+	result := db.Preload("Photo").Where("user_id = ?", userID).Find(&comments)
 
 	if result.Error != nil {
 		return nil, result.Error

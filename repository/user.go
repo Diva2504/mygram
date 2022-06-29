@@ -6,11 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetAllUser(db *gorm.DB) ([]models.Photo, error) {
-  
-  return nil, nil
-}
-
 func CreateUser(data *models.User, db *gorm.DB) (models.User, error) {
   var user models.User
   err := db.Debug().Create(&data).Error
@@ -34,3 +29,24 @@ func UserLogin(data *models.User, db *gorm.DB) (models.User, error) {
   }
   return user, nil
 }
+
+func DeleteUser(db *gorm.DB, id uint) error {
+	var user models.User
+
+	err := db.Delete(&user, id).Error
+
+	if err != nil {
+		return err
+	} 
+  return nil
+}
+
+func UpdateUser(db *gorm.DB, id uint, data models.User) error {
+	var user models.User
+	err := db.Model(&user).Where("id = ?", id).Updates(&data).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+

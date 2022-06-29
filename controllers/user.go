@@ -50,3 +50,39 @@ func (db Handlers) UserLogin(c *gin.Context) {
   return
 }
 
+func (db Handlers) DeleteUser (c *gin.Context) {
+
+  userData := c.MustGet("id")
+	userId := uint(userData.(float64))
+  
+  err := repository.DeleteUser(db.Connect, userId)
+  if err != nil {
+    c.AbortWithError(http.StatusInternalServerError, err)
+    return
+  }
+  c.JSON(http.StatusOK, gin.H{
+    "message" : "account deleted",
+  })
+}
+
+func (db Handlers) UpdateUser (c *gin.Context) {
+  var data models.User
+
+  if err := c.ShouldBindJSON(&data); err != nil {
+    c.AbortWithStatus(http.StatusBadRequest)
+    return
+  }
+  userData := c.MustGet("id")
+	userId := uint(userData.(float64))
+
+  err := repository.UpdateUser(db.Connect, userId, data)
+  if err != nil {
+    c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+      "message" : err,
+    })
+  }
+  c.JSON(http.StatusOK, gin.H{
+    "status" : "User Updated",
+    "User" : data.Username,
+  })
+}

@@ -9,4 +9,5 @@ type Photo struct {
 	PhotoUrl string
 	UserID   uint
 	User     *User
+  Comment []Comment
 }

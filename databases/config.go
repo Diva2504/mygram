@@ -26,7 +26,7 @@ func DBInit() {
 		log.Panic("Databases Error", err.Error())
 	}
 	log.Printf("Databases Connected")
-	db.Debug().AutoMigrate(models.Photo{})
+	db.Debug().AutoMigrate(models.Photo{}, models.User{}, models.Comment{}, models.SocialMedia{})
 }
 
 func GetDB() *gorm.DB {
