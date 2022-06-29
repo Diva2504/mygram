@@ -1,6 +1,7 @@
 # Project 2 - MyGramm app
 
-**WIP**
+## Deployment
+https://mygram-api-hacktiv.herokuapp.com/
 
 ## Project structure
 
