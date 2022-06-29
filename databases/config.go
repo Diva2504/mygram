@@ -3,7 +3,6 @@ package databases
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/takadev15/mygram-api/models"
 	"gorm.io/driver/postgres"
@@ -11,11 +10,11 @@ import (
 )
 
 var (
-	userName = os.Getenv("DB_USER")
-	dbName   = os.Getenv("DB_NAME")
-	dbPass   = os.Getenv("DB_PASSWORD")
-	dbPort   = os.Getenv("DB_PORT")
-  dbHost   = os.Getenv("DB_HOST")
+	userName = "taka"
+	dbName   = "hacktiv_mygram"
+	dbPass   = "depok1001"
+	dbPort   = "5432"
+  dbHost   = "localhost"
 	db       *gorm.DB
 	err      error
 )

@@ -17,18 +17,18 @@ services:
     env_file:
       - .env
   # Pgadmin dashboard
-  pgadmin:
-    container_name: mygram_dashboard
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=taka@test.com
-      - PGADMIN_DEFAULT_PASSWORD=depok001
-    depends_on: 
-      - db
-    ports: 
-      - "8080:80"
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-volumes:
-  pgadmin-data:
+#   pgadmin:
+#     container_name: mygram_dashboard
+#     image: dpage/pgadmin4
+#     restart: always
+#     environment:
+#       - PGADMIN_DEFAULT_EMAIL=taka@test.com
+#       - PGADMIN_DEFAULT_PASSWORD=depok001
+#     depends_on: 
+#       - db
+#     ports: 
+#       - "8080:80"
+#     volumes:
+#       - pgadmin-data:/var/lib/pgadmin
+# volumes:
+#   pgadmin-data:

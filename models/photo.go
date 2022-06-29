@@ -7,5 +7,6 @@ type Photo struct {
 	Title    string
 	Caption  string
 	PhotoUrl string
+  UserID   uint
 	User     *User
 }
