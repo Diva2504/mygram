@@ -19,6 +19,7 @@ type SocialMedia struct {
 	Name           string `gorm:"type:varchar(255)" json:"name" binding:"required"`
 	SocialMediaUrl string `gorm:"type:text" json:"socmed_url" binding:"required"`
 	UserID         uint   `gorm:"not null" json:"user_id"`
+	User           *User
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) error {
